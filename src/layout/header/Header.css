@@ -1,0 +1,31 @@
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: royalblue;
+    color: #fff;
+
+    .main-nav {
+        display: flex;
+        padding-inline: 1rem;
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem;
+
+            .nav-link {
+                text-decoration: none;
+                color: white;
+                transition: text-decoration 0.2s ease-in-out, color 0.2s ease-in-out;
+                &:hover {
+                    color: #222222;
+                }
+
+                &.active {
+                    color: #222222;
+                }
+            }
+        }
+    }
+}

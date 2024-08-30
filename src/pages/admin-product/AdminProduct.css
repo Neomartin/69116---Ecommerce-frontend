@@ -1,0 +1,11 @@
+.admin-container {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+
+    .form-container {
+        flex: 0 0 360px;
+    }
+
+    
+}

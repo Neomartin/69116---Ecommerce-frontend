@@ -1,0 +1,42 @@
+.contact-container {
+    display: flex;
+
+    >div {
+        flex: 1;
+    }
+
+    .contact-form {
+        background-color: #2840b8;
+        padding: 0;
+        color: white;
+
+        .contact-form-title {
+            /* padding: 1rem; */
+            text-align: center;
+            margin: auto;
+        }
+    }
+
+}
+
+.main-container {
+
+    .contact-container {
+        justify-content: center;
+        margin-top: 2rem;
+        border-radius: 15px;
+        border: 0.5rem solid black;
+        
+    }
+}
+
+@media screen and (width < 768px) {
+    .contact-container {
+        flex-direction: column;
+
+        .contact-map {
+            flex-basis: 400px;
+        }
+    }
+}
+
