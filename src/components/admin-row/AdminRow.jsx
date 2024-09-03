@@ -1,6 +1,6 @@
 import './AdminRow.css';
 
-export default function AdminRow({ producto, deleteProduct }) {
+export default function AdminRow({ producto, deleteProduct, handleEditProduct }) {
   return (
     <tr className="admin-table-row">
       <td className="image">
@@ -27,7 +27,9 @@ export default function AdminRow({ producto, deleteProduct }) {
       </td>
       <td className="actions">
         <div className="actions-container">
-          <button className="btn">Editar</button>
+          <button className="btn" onClick={  () => handleEditProduct(producto)   }>
+            Editar
+          </button>
           <button className="btn btn-danger" onClick={  () => deleteProduct(producto.id)  }>Eliminar</button> 
         </div>
       </td>

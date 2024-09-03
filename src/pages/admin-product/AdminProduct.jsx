@@ -11,14 +11,31 @@ const URL = "https://66cd012e8ca9aa6c8cc93b12.mockapi.io/api/v1";
 
 export default function AdminProduct() {
   const [ products, setProducts ] = useState([]);
+  // Estado para manejar la edición de productos
+  const [ selectedProduct, setSelectedProduct ] = useState(null)
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm();
+  const { register, setValue, reset, handleSubmit, formState: { errors, isValid } } = useForm();
+
+  useEffect(() => {
+    getProducts();
+  }, [])
 
   useEffect(() => {
 
-    getProducts();
+    if(selectedProduct) {
 
-  }, [])
+        setValue("name", selectedProduct.name),
+        setValue("price", selectedProduct.price),
+        setValue("description",  selectedProduct.description),
+        setValue("image", selectedProduct.image),
+        setValue("category", selectedProduct.category),
+        setValue("createdAt", selectedProduct.createdAt)
+
+    }  else {
+      reset()
+    }
+
+  }, [ selectedProduct, setValue, reset ])
 
 
   async function getProducts() {
@@ -69,16 +86,36 @@ export default function AdminProduct() {
 
   }
 
-
-
   async function onProductSubmit(producto) {
     console.log(producto)
     try {
-      
-      const response = await axios.post(`${URL}/products`, producto)
-      console.log(response.data)
 
+      if(selectedProduct) {
+        // HAcer un put
+        const { id } = selectedProduct;
+        const response = await axios.put(`${URL}/products/${id}`, producto);
+        console.log(response.data)
+        Swal.fire({
+          title:"Actualización correcta",
+          text: "El producto fue actualizado correctamente",
+          icon: "success",
+          timer: 1500
+        })
+
+        setSelectedProduct(null)
+        
+
+      } else {
+        // si no tengo estado selectedProduct (null) significa que estoy creando un producto
+        const response = await axios.post(`${URL}/products`, producto)
+        console.log(response.data);
+        
+
+      }
+
+      
       getProducts();
+      // setSelectedProduct(null)
 
     } catch (error) {
       console.log(error)
@@ -87,10 +124,26 @@ export default function AdminProduct() {
     
   }
 
+  // # Editar productos
+  // crear un función para obtener los datos del producto a editar
+  function handleEditProduct(producto) {
+
+    console.log("Producto a editar", producto);
+    setSelectedProduct(producto);
+    // setValue("name", producto.name);
+    // setValue("price", producto.price)
+
+  }
+
+
+  // rellenar el formulario con la data del producto seleccionado
+  // definir alguna forma de determinar si estamos editando o si agregando producto
+  // enviar la nueva data a nuestro backend (mockapi) con un petición a través del método PUT
+  // solicitar los productos nuevamente para poder ver las modificaciones en el prod editado
+
+
   return (
     <>
-      
-
       <div className="admin-container">
           {/* Contenedor del formulario */}
           <div className="form-container">
@@ -140,14 +193,25 @@ export default function AdminProduct() {
                   <input type="url" {...register("image") } />
                 </div>
 
-              <button className="btn" type="submit" disabled={ !isValid }  >Crear</button>
+              <button className={`btn ${selectedProduct && 'btn-success'}`}       
+                      type="submit" 
+                      disabled={ !isValid }  >
+
+                {
+                  selectedProduct ? "Editar" : "Crear"
+                }
+
+              </button>
 
             </form>
           </div>
           {/* Contenedor de la tabla de productos */}
           <div className="table-container">
 
-            <AdminTable products={products} deleteProduct={deleteProduct} />
+            <AdminTable products={products} 
+                        deleteProduct={deleteProduct}
+                        handleEditProduct={handleEditProduct}
+                        />
             
           </div>
       </div>

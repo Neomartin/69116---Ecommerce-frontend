@@ -1,7 +1,7 @@
 import './AdminTable.css';
 import AdminRow from '../admin-row/AdminRow';
 
-export default function AdminTable({ products, deleteProduct }) {
+export default function AdminTable({ products, deleteProduct, handleEditProduct }) {
   return (
     <table className="admin-table">
       <thead>
@@ -35,7 +35,9 @@ export default function AdminTable({ products, deleteProduct }) {
 
             return <AdminRow  key={prod.id} 
                               producto={prod} 
-                              deleteProduct={deleteProduct} />
+                              deleteProduct={deleteProduct}
+                              handleEditProduct={handleEditProduct}
+                              />
             
           })
         }
