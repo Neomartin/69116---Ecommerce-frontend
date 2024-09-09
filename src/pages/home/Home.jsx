@@ -1,5 +1,15 @@
+import ProductGallery from "../../components/product-gallery/ProductGallery";
+
 export default function Home() {
+
   return (
-    <h1>Home</h1>
+    <>
+      <section style={{height: '350px', backgroundColor: '#666' }}>
+        CAROUSEL
+      </section>
+      {/* #Sección de productos */}
+      <ProductGallery />
+
+    </>
   )
 }

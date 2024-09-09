@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import Header from "./layout/header/Header";
 import Footer from "./layout/footer/Footer";
 import AdminProduct from "./pages/admin-product/AdminProduct";
+import ProductDetail from "./pages/product-detail/ProductDetail";
 
 export default function App() {
   return (
@@ -17,6 +18,8 @@ export default function App() {
         <Routes>
 
           <Route path="/" element={ <Home />  } />
+
+          <Route path="/product-detail/:id" element={ <ProductDetail /> } />
 
           <Route path="/contact" element={ <Contact /> } />
 
