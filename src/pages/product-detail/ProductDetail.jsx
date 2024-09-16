@@ -2,12 +2,15 @@ import { useParams } from 'react-router-dom';
 import './ProductDetail.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Spinner } from 'react-bootstrap';
+import { useOrder } from '../../context/OrderContext';
 
 const URL = import.meta.env.VITE_SERVER_URL;
 
 
 export default function ProductDetail() {
+    //  Importar mi contexto
+    const { addProduct } = useOrder();
+
 
     const [product, setProduct] = useState()
 
@@ -46,6 +49,9 @@ export default function ProductDetail() {
         <div className='product-detail-container'>
             {/* Estructura del detalle del producto */}
             <h1>{ product?.name }</h1>
+
+            <button onClick={() => addProduct(product)}>Agregar al carrito</button>
+
         </div>
     )
 }
