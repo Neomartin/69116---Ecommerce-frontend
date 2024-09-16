@@ -14,7 +14,7 @@ export default function OrderDialog() {
 
       <div className="modal-content" onClick={(e) => e.stopPropagation() }>
 
-        <div className="modal-header">Titulo del Modal</div>
+        <div className="modal-header">Orden actual</div>
 
         <div className="modal-body">
 
