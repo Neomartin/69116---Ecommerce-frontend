@@ -15,7 +15,7 @@ export default function Header() {
     <header className="main-header">
       <nav className="main-nav">
         <div className="nav-item">
-          <NavLink className="nav-link" to='/'>Principal</NavLink>
+          <NavLink className="nav-link" to='/'>Home</NavLink>
         </div>
         <div className="nav-item">
           <NavLink className="nav-link" to='/contact'>Contacto</NavLink>
