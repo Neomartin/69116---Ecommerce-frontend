@@ -1,0 +1,25 @@
+.order-item {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid rgba(220, 20, 60, 0.25);
+    }
+
+    .item-image img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .item-info {
+        flex: 1;
+        font-weight: 500;
+    }
+
+    .item-actions {
+        color: #333;
+    }
+}

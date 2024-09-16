@@ -2,8 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import { faCartShopping, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import './ProductCard.css';
+import { useOrder } from '../../context/OrderContext';
 
 export default function ProductCard({ prod }) {
+
+    const { addProduct } = useOrder();
+
+
   return (
     <article className='product-card'>
         <header className="card-header">
@@ -29,8 +34,8 @@ export default function ProductCard({ prod }) {
         </main>
         <footer className="card-footer">
 
-            <button className="product-btn">
-                <FontAwesomeIcon icon={faCartShopping} />
+            <button className="product-btn" onClick={() => addProduct(prod)}>
+                <FontAwesomeIcon icon={faCartShopping}  />
             </button>
 
             <NavLink to={`/product-detail/${prod.id}`} className="product-btn">

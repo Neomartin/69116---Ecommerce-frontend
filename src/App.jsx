@@ -6,14 +6,18 @@ import Header from "./layout/header/Header";
 import Footer from "./layout/footer/Footer";
 import AdminProduct from "./pages/admin-product/AdminProduct";
 import ProductDetail from "./pages/product-detail/ProductDetail";
+import OrderDialog from "./components/order-dialog/OrderDialog";
 
 export default function App() {
+  
+
   return (
     <>
+
+      <OrderDialog />
       
-
       <Header />
-
+    
       <main className="main-container">
         <Routes>
 
