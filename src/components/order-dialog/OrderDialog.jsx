@@ -27,13 +27,17 @@ export default function OrderDialog() {
             
             
           </ul>
-          <div className='list-total'>
-              $ { total }
+          <div className='order-total'>
+              
+              <small>TOTAL $</small> 
+              <strong>
+                { total } 
+              </strong>
           </div>
         </div>
 
         <div className="modal-footer">
-          <button onClick={() => setToggleModal(!toggleModal)}>
+          <button className="btn btn-gray" onClick={() => setToggleModal(!toggleModal)}>
             Cerrar
           </button>
 

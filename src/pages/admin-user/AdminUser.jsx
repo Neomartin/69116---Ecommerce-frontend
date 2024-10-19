@@ -5,9 +5,10 @@ import AdminTable from "../../components/admin-table/AdminTable";
 
 import './AdminProduct.css';
 import Swal from "sweetalert2";
-import { FORM_TYPES } from "../../config/form-config";
 
 const URL = "https://66cd012e8ca9aa6c8cc93b12.mockapi.io/api/v1";
+
+
 
 
 export default function AdminProduct() {
@@ -165,9 +166,9 @@ export default function AdminProduct() {
                 { errors.name?.type === "minLength" && <div className="input-error">Mínimo de carácteres es 3</div> }
 
               </div>
-                <label htmlFor="price">Precio</label>
+
               <div className="input-group">
-                <input type="number" id="price" {...register("price", { required: true }) } />
+                <input type="number" {...register("price", { required: true }) } />
 
                 { errors.price && <div className="input-error">El campo price es requerido</div> }
               </div>
@@ -196,7 +197,7 @@ export default function AdminProduct() {
                   <input type="url" {...register("image") } />
                 </div>
 
-              <button className={`btn mt-2 ${selectedProduct && 'btn-success'}`}       
+              <button className={`btn ${selectedProduct && 'btn-success'}`}       
                       type="submit" 
                       disabled={ !isValid }  >
 

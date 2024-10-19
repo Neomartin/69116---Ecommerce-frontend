@@ -19,6 +19,10 @@
         font-weight: 500;
     }
 
+    .item-input {
+        width: 5ch;
+    }
+
     .item-actions {
         color: #333;
     }

@@ -38,7 +38,7 @@ export default function ProductCard({ prod }) {
                 <FontAwesomeIcon icon={faCartShopping}  />
             </button>
 
-            <NavLink to={`/product-detail/${prod.id}`} className="product-btn">
+            <NavLink to={`/product-detail/${prod._id}`} className="product-btn">
 
                 <FontAwesomeIcon icon={faUpRightFromSquare} />
                 

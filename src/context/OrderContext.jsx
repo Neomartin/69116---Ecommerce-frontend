@@ -42,7 +42,7 @@ export default function OrderProvider({ children }) {
         })
 
     }
-
+    // Función para contar cuantos items tenemos en nuestro carrito según la cantidad de los mismos en la orden actual
     function calculateCount() {
         let cantidadItems = 0;
         for(let item of order) {
@@ -50,7 +50,7 @@ export default function OrderProvider({ children }) {
         }
         setCount(cantidadItems)
     }
-
+    // Calcular el valor total de la orden según precio del item x su cantidad
     function calculateTotal() {
         let total = 0;
         order.forEach(item => {
@@ -61,6 +61,41 @@ export default function OrderProvider({ children }) {
         setTotal(total)
     }
 
+    function removeProduct(id) {
+
+        // const indice = order.findIndex(prod => prod.id === id);
+
+        // const orderCopy = [ ...order ];
+
+        // orderCopy.splice(indice, 1)
+        // setOrder(orderCopy)
+
+        const orderFiltered = order.filter(prod => prod.id !== id)
+
+        setOrder(orderFiltered)
+        
+    }
+
+    function changeItemQuantity(id, value) {
+
+        const newOrder = order.map(prod => {
+
+            if(prod.id === id) {
+                prod.quantity = value;
+            }
+
+            return prod;
+        })
+
+        setOrder(newOrder)
+
+        // const producto = order.find(prod => prod.id === id);
+
+        // producto.quantity = value;
+
+        // setOrder([ ...order ])
+
+    }
 
     return (
         <OrderContext.Provider
@@ -70,7 +105,9 @@ export default function OrderProvider({ children }) {
                 toggleModal,
                 setToggleModal,
                 count,
-                total
+                total,
+                removeProduct,
+                changeItemQuantity
             }}
         >
             { children }
