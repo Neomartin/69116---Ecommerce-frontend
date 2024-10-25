@@ -53,6 +53,7 @@
             cursor: pointer;
             transition: color .25s ease-in-out;
             position: relative;
+            line-height: 24px;
             &:hover {
                 color: #222222;
             }

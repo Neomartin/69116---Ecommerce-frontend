@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { useUser } from './UserContext';
+import axios from 'axios';
 
 
 const OrderContext = createContext();
@@ -7,6 +9,9 @@ const OrderContext = createContext();
 export const useOrder = () => useContext(OrderContext);
 
 export default function OrderProvider({ children }) {
+
+    const { user } = useUser();
+
 
     const [ count, setCount ] = useState(0)
     const [ order, setOrder ] = useState([]);
@@ -21,7 +26,7 @@ export default function OrderProvider({ children }) {
 
     function addProduct(product) {
 
-        const productExists = order.find(prod => prod.id === product.id);
+        const productExists = order.find(prod => prod._id === product._id);
         console.log(productExists)
 
         if(productExists) {
@@ -61,7 +66,7 @@ export default function OrderProvider({ children }) {
         setTotal(total)
     }
 
-    function removeProduct(id) {
+    function removeProduct(_id) {
 
         // const indice = order.findIndex(prod => prod.id === id);
 
@@ -70,7 +75,7 @@ export default function OrderProvider({ children }) {
         // orderCopy.splice(indice, 1)
         // setOrder(orderCopy)
 
-        const orderFiltered = order.filter(prod => prod.id !== id)
+        const orderFiltered = order.filter(prod => prod._id !== _id)
 
         setOrder(orderFiltered)
         
@@ -97,6 +102,42 @@ export default function OrderProvider({ children }) {
 
     }
 
+    async function createOrder(
+    ) {
+
+        try {
+
+            if(!user?._id) {
+                alert("Necesitas iniciar sesión para crear una orden")
+                return;
+            }
+
+            const products = order.map(prod => {
+                return {
+                    product: prod._id,
+                    quantity: prod.quantity,
+                    price: prod.price
+                }
+            })
+    
+            // const user = user._id;
+    
+            await axios.post("http://localhost:3000/orders", {
+                products,
+                user: user._id,
+                total
+            })
+
+            alert("Orden creada")
+        } catch (error) {
+            console.log(error)
+            alert("Error al crear la orden")
+        }
+
+        
+
+    }
+
     return (
         <OrderContext.Provider
             value={{
@@ -107,7 +148,8 @@ export default function OrderProvider({ children }) {
                 count,
                 total,
                 removeProduct,
-                changeItemQuantity
+                changeItemQuantity,
+                createOrder
             }}
         >
             { children }

@@ -1,10 +1,17 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './AdminRow.css';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { formatDate } from '../../utils/formatDate';
+
+const URL = import.meta.env.VITE_LOCAL_SERVER
 
 export default function AdminRow({ producto, deleteProduct, handleEditProduct }) {
   return (
     <tr className="admin-table-row">
       <td className="image">
-        <img src={producto.image} alt={producto.name} />
+
+        <img src={`${URL}/images/products/${producto.image}`} alt={producto.name} />
+        
       </td>
       <td className="name">
         {producto.name}
@@ -23,14 +30,16 @@ export default function AdminRow({ producto, deleteProduct, handleEditProduct })
         {producto.category}
       </td>
       <td className="date">
-        {producto.createdAt}
+        { formatDate(producto.createdAt) }
       </td>
       <td className="actions">
         <div className="actions-container">
           <button className="btn" onClick={  () => handleEditProduct(producto)   }>
-            Editar
+            <FontAwesomeIcon icon={faEdit} />
           </button>
-          <button className="btn btn-danger" onClick={  () => deleteProduct(producto.id)  }>Eliminar</button> 
+          <button className="btn btn-danger" onClick={  () => deleteProduct(producto._id)  }>
+            <FontAwesomeIcon icon={faTrash} />  
+          </button> 
         </div>
       </td>
 

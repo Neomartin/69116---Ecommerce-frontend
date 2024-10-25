@@ -4,6 +4,8 @@ import { faCartShopping, faUpRightFromSquare } from '@fortawesome/free-solid-svg
 import './ProductCard.css';
 import { useOrder } from '../../context/OrderContext';
 
+const URL = import.meta.env.VITE_LOCAL_SERVER;
+
 export default function ProductCard({ prod }) {
 
     const { addProduct } = useOrder();
@@ -12,7 +14,8 @@ export default function ProductCard({ prod }) {
   return (
     <article className='product-card'>
         <header className="card-header">
-            <img  src={prod.image} 
+            <img  src={`${URL}/images/products/${prod.image}`} 
+            
                   alt={prod.name} 
                   className="product-image" />
         </header>
