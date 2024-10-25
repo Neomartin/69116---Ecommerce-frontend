@@ -5,9 +5,10 @@ import AdminTable from "../../components/admin-table/AdminTable";
 
 import './AdminProduct.css';
 import Swal from "sweetalert2";
-import { FORM_TYPES } from "../../config/form-config";
 
-const URL = import.meta.env.VITE_LOCAL_SERVER;
+const URL = "https://66cd012e8ca9aa6c8cc93b12.mockapi.io/api/v1";
+
+
 
 
 export default function AdminProduct() {
@@ -15,13 +16,11 @@ export default function AdminProduct() {
   const [ products, setProducts ] = useState([]);
   // Estado para manejar la edición de productos
   const [ selectedProduct, setSelectedProduct ] = useState(null)
-  const [ categories, setCategories ] = useState([])
 
   const { register, setValue, reset, handleSubmit, formState: { errors, isValid } } = useForm();
 
   useEffect(() => {
     getProducts();
-    getCategories();
   }, [])
 
   useEffect(() => {
@@ -42,21 +41,6 @@ export default function AdminProduct() {
   }, [ selectedProduct, setValue, reset ])
 
 
-  async function getCategories() {
-    try {
-      
-      const response = await axios.get(`${URL}/categories`);
-
-      console.log(response.data);
-
-      setCategories(response.data.categories)
-
-    } catch (error) {
-      console.log(error)
-      alert("No se pudieron cargar las categorías")
-    }
-  }
-
   async function getProducts() {
 
     try {
@@ -65,7 +49,7 @@ export default function AdminProduct() {
 
       console.log(response.data);
 
-      setProducts(response.data.products)
+      setProducts(response.data)
 
     } catch (error) {
       console.log(error);
@@ -105,31 +89,14 @@ export default function AdminProduct() {
 
   }
 
-
-
-
-  
   async function onProductSubmit(producto) {
-    
-
-
+    console.log(producto)
     try {
-
-      const formData = new FormData();
-      formData.append("name", producto.name);
-      formData.append("price", producto.price);
-      formData.append("description", producto.description);
-      formData.append("category", producto.category);
-
-      if(producto.image[0]) {
-        formData.append("image", producto.image[0])
-      }
-
 
       if(selectedProduct) {
         // HAcer un put
-        const { _id } = selectedProduct;
-        const response = await axios.put(`${URL}/products/${_id}`, formData);
+        const { id } = selectedProduct;
+        const response = await axios.put(`${URL}/products/${id}`, producto);
         console.log(response.data)
         Swal.fire({
           title:"Actualización correcta",
@@ -143,7 +110,7 @@ export default function AdminProduct() {
 
       } else {
         // si no tengo estado selectedProduct (null) significa que estoy creando un producto
-        const response = await axios.post(`${URL}/products`, formData)
+        const response = await axios.post(`${URL}/products`, producto)
         console.log(response.data);
         
 
@@ -199,9 +166,9 @@ export default function AdminProduct() {
                 { errors.name?.type === "minLength" && <div className="input-error">Mínimo de carácteres es 3</div> }
 
               </div>
-                <label htmlFor="price">Precio</label>
+
               <div className="input-group">
-                <input type="number" id="price" {...register("price", { required: true }) } />
+                <input type="number" {...register("price", { required: true }) } />
 
                 { errors.price && <div className="input-error">El campo price es requerido</div> }
               </div>
@@ -213,16 +180,10 @@ export default function AdminProduct() {
 
               <div className="input-group">
                 <label htmlFor="">Categoría</label>
-                <select {...register("category")}>
-                  {
-                    categories.map(cat => (
-                      <option key={cat._id} value={cat.name}>{ cat.viewValue }</option>
-                    ))
-                  }
-
-                  {/* <option value="Consolas">Consolas Video Juegos</option>
+                <select {...register("category")}>\
+                  <option value="Consolas">Consolas Video Juegos</option>
                   <option value="games">Juegos</option>
-                  <option value="devices">Accesorios</option> */}
+                  <option value="devices">Accesorios</option>
                 </select>
               </div>
 
@@ -231,12 +192,12 @@ export default function AdminProduct() {
                 <input type="date" {...register("createdAt")}  />
               </div>
 
-              <div className="input-group">
-                <label htmlFor="">Imagen</label>
-                <input accept="image/*" type="file" {...register("image") } />
-              </div>
+                <div className="input-group">
+                  <label htmlFor="">Imagen</label>
+                  <input type="url" {...register("image") } />
+                </div>
 
-              <button className={`btn mt-2 ${selectedProduct && 'btn-success'}`}       
+              <button className={`btn ${selectedProduct && 'btn-success'}`}       
                       type="submit" 
                       disabled={ !isValid }  >
 
